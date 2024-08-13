@@ -1,0 +1,13 @@
+node_modules
+.env
+certificates
+terraform.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
+.terraform/
+*.tfplan
+crash.log
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
