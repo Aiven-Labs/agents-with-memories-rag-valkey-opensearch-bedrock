@@ -1,13 +1,13 @@
 import Agent from './src/agent.js';
-import consumeAndIndex from "./src/sendWithEmbeddingstoOpenSearch.js";
+import consumeAndIndex from "./src/vectorize.js";
 
 const kafkaTopic = Date.now().toString();
-const agent2 = new Agent('Nick', 'Judy', kafkaTopic);
+const nick = new Agent('Nick', 'Judy', false, kafkaTopic);
 consumeAndIndex("Nick-reflections");
-agent2.start();
+nick.start();
 
-const agent1 = new Agent('Judy', 'Nick', kafkaTopic);
-agent1.start();
+const judy = new Agent('Judy', 'Nick', true, kafkaTopic);
+judy.start();
 consumeAndIndex("Judy-reflections");
 
 

@@ -3,8 +3,6 @@ import Valkey from 'iovalkey';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const valkeyClient = new Valkey(process.env.VALKEY_SERVICE_URI);
-
 export const client = new BedrockRuntimeClient({
     region: 'us-east-1',
     credentials: {
@@ -13,7 +11,25 @@ export const client = new BedrockRuntimeClient({
     }
 });
 
-export const generateResponse = async (prompt) => {
+
+export const subscribe = (channel) => {
+    const valkeyClient = new Valkey(process.env.VALKEY_SERVICE_URI);
+    valkeyClient.subscribe(channel, async (err, count) => {
+        if(err) {
+            console.error(`ERROR: failed to subscribe to channel ${channel}. error: ${err.message}`);
+        } else {
+            console.log(`NOTIFICATION: successfully subscribed to channel ${channel}`);
+        }
+    })
+    return valkeyClient;
+}
+
+export const sendToChannel = (channel, message) => {
+    const valkeyClient = new Valkey(process.env.VALKEY_SERVICE_URI);
+    valkeyClient.publish(channel, message);
+}
+
+export const invokeModel = async (prompt) => {
     const input = {
         modelId: "anthropic.claude-3-haiku-20240307-v1:0",
         contentType: "application/json",

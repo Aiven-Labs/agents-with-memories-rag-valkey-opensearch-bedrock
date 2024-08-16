@@ -1,5 +1,3 @@
-// prompts.js
-
 export const getPromptStart = (agentName) => `You're an inhabitant of a planet Hipola, a very small and cosy planet. Your name is ${agentName}.`;
 
 export const instructions = `Always follow these instructions:
@@ -16,9 +14,9 @@ export const getMemoryPrompt = (agentName, anotherAgent) => `The context are mem
 
 export const getContinuationMemoryPrompt = (agentName, anotherAgent, message) => `The context are memories of ${agentName}. Are there any memories or thoughts about ${anotherAgent} relevant to the message "${message}"? If yes return "Something that I remember from past conversations with ${anotherAgent} is that .... [continue with a concise list of notes]". Otherwise, if there is no relevant context return "nothing relevant that I remember" and be very very very short and don't provide any other judgement or additional information!`;
 
-export const getFirstPrompt = (agentName, memoriesOfOtherAgent) => `${getPromptStart(agentName)} ${memoriesOfOtherAgent}.\n\n${instructions}`;
+export const getStartConversationPrompt = (agentName, memoriesOfOtherAgent) => `${getPromptStart(agentName)} ${memoriesOfOtherAgent}.\n\n${instructions}`;
 
-export const getContinuationPrompt = (agentName, memoryString, longTermMemory, message) => `
+export const getContinueConversationPrompt = (agentName, memoryString, longTermMemory, message) => `
 ${getPromptStart(agentName)}
 You're meeting another inhabitant. This is the conversation so far:\n${memoryString}\n\n\n\n
 

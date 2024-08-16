@@ -2,7 +2,7 @@ import Kafka from 'node-rdkafka';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const consumeMessagesFromStartToEnd = async (topic, groupId) => {
+export const consumeAll = async (topic, groupId) => {
     return new Promise((resolve, reject) => {
         console.log('Initializing Kafka Consumer...');
         const consumer = new Kafka.KafkaConsumer({
@@ -42,8 +42,6 @@ export const consumeMessagesFromStartToEnd = async (topic, groupId) => {
             const messageOffset = data.offset;
 
             console.log(`Message offset: ${messageOffset}, Latest offset: ${latestOffset}`);
-            // Only consume messages up to the latest offset
-
                 messages.push(data.value.toString());
                 console.log('Message added to the list.', data.value.toString());
             if (messageOffset === latestOffset - 1) {
@@ -75,11 +73,3 @@ export const consumeMessagesFromStartToEnd = async (topic, groupId) => {
     });
 };
 
-// Example usage
-// consumeMessagesFromStartToEnd('your-topic', 'your-group-id')
-//     .then(messages => {
-//         console.log('Consumed messages:', messages);
-//     })
-//     .catch(err => {
-//         console.error('Error consuming messages:', err);
-//     });
