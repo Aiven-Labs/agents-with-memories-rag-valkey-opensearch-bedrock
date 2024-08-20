@@ -16,7 +16,7 @@ In Aiven console Go to **User Information** menu and select **Tokens**:
 Click on **Generate token**, add a description for the token and press to generate. A popup with a newly generated token will appear. Copy token value.
 
 ### Run Terraform script
-In this project we use Terraform to set up Aiven services. If you don't have Terraform installed follow the steps from [the Terraform documentation page](https://developer.hashicorp.com/terraform/install).
+In this project we use Terraform to set up Aiven services. If you don't have Terraform installed follow the steps from [the Terraform documentation page](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
 
 The terraform files can be found in `./terraform` folder of the current project.
 `./terraform/terraform.tfvars-example` provides an example of *tfvars* file. 
