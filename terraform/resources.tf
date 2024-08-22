@@ -14,12 +14,30 @@ resource "aiven_kafka" "kafka-service1" {
   }
 }
 
+# Kafka topic for Judy
+resource "aiven_kafka_topic" "Judy-reflections" {
+  project      = var.project_name
+  service_name = aiven_kafka.kafka-service1.service_name
+  topic_name   = "Judy-reflections"
+  partitions   = 3
+  replication  = 2
+}
+
+# Kafka topic for Nick
+resource "aiven_kafka_topic" "Nick-reflections" {
+  project      = var.project_name
+  service_name = aiven_kafka.kafka-service1.service_name
+  topic_name   = "Nick-reflections"
+  partitions   = 3
+  replication  = 2
+}
+
 # OpenSearch service
 resource "aiven_opensearch" "open-search-service" {
   project                 = var.project_name
   cloud_name              = "aws-us-east-2"
   plan                    = "startup-4"
-  service_name            = "kafka-agents-long-term-memory"
+  service_name            = "opensearch-agent-conversation-memory"
 }
 
 # Valkey service
@@ -27,7 +45,7 @@ resource "aiven_valkey" "valkey-service" {
   project                 = var.project_name
   cloud_name              = "aws-us-east-2"
   plan                    = "startup-4"
-  service_name            = "kafka-agents-pub-sub"
+  service_name            = "valkey-agent-conversation-memory"
 }
 
 # Store sensitive outputs in a temporary file
