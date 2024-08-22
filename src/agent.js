@@ -63,14 +63,14 @@ class Agent {
         await sendToChannel(`${this.agentName}-internalize`, "Reflect on the conversation");
     }
 
-    async replyToMessage(message, recipient) {
+    async replyToMessage(recipient, message) {
         //agent indicated that no longer wants to continue conversation
         if (message && message.includes("END")) {
             console.log("trigger reflection")
             return await this.triggerReflection(recipient);
         }
 
-        const prompt = this.getPrompt(message);
+        const prompt = await this.getPrompt(message);
         console.log(`### ${this.agentName.toUpperCase()} PROMPT: ###`)
         console.log("prompt: " + this.agentName, prompt)
         const response = await invokeModel(prompt);
@@ -97,7 +97,7 @@ class Agent {
 
             this.storeInKafka(this.conversationTopic, message);
             await delay(1000);
-            await this.replyToMessage(parsedMessage.message, parsedMessage.agent);
+            await this.replyToMessage(parsedMessage.agent, parsedMessage.message);
         });
     }
 
@@ -110,6 +110,10 @@ class Agent {
         });
     }
 
+    async startConversation(recipient) {
+        await this.replyToMessage(recipient);
+    }
+
     async start() {
         // listen what another agent tells you
         this.startToListenToOthers();
@@ -118,7 +122,7 @@ class Agent {
         this.waitToConversationEnd();
 
         if (this.starts) {
-            await this.replyToMessage(null, this.anotherAgent);
+            await this.startConversation(this.anotherAgent);
         }
     }
 }
