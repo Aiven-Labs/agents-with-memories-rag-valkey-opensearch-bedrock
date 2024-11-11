@@ -11,10 +11,11 @@ import {
 } from './prompts.js';
 
 class Agent {
-    constructor(agentName, anotherAgent, starts,conversationTopic) {
+    constructor(agentName, anotherAgent, starts,conversationTopic, agentNameColor) {
         console.log({ conversationTopic })
         this.agentName = agentName;
         this.anotherAgent = anotherAgent;
+        this.agentNameColor = agentNameColor
         this.shortMemory = [];
         this.starts = starts;
         this.conversationTopic = conversationTopic;
@@ -24,8 +25,8 @@ class Agent {
 
     async queryLongTermMemory(message) {
         const longmemory = await this.longMemoryService.getLongMemory(`\n\nHuman: ${message} \n\nAssistant:`);
-        console.log("******* " + this.agentName.toUpperCase() + " LONG MEMORY: " + longmemory);
-        console.log("************************************************************************************");
+        // console.log("******* " + this.agentName.toUpperCase() + " LONG MEMORY: " + longmemory);
+        // console.log("************************************************************************************");
         return longmemory;
     }
 
@@ -33,6 +34,7 @@ class Agent {
         // start of the conversation:
         if (!message) {
             const memoriesOfOtherAgent = await this.queryLongTermMemory(getMemoryPrompt(this.agentName, this.anotherAgent));
+        
             return getStartConversationPrompt(this.agentName, memoriesOfOtherAgent);
         }
 
@@ -43,7 +45,7 @@ class Agent {
     }
 
     async getConversationSummary(content) {
-        const prompt = getConversationSummaryPrompt(this.agentName, content);
+        const prompt = getConversationSummaryPrompt(this.agentName, content, this.anotherAgent);
         return await invokeModel(prompt);
     }
 
@@ -71,11 +73,11 @@ class Agent {
         }
 
         const prompt = await this.getPrompt(message);
-        console.log(`### ${this.agentName.toUpperCase()} PROMPT: ###`)
-        console.log("prompt: " + this.agentName, prompt)
+        console.log(`\x1b[1m\x1b[4m\x1b[38;5;249m 🔹 ${this.agentName.toUpperCase()} PROMPT 🔹 \x1b[0m`)
+        console.log(`\x1b[38;5;249m${prompt}\x1b[0m\n`)
         const response = await invokeModel(prompt);
-        console.log(`=== ${this.agentName.toUpperCase()} SAYS: ===`)
-        console.log(`${response}`);
+        console.log(`\x1b[1m\x1b[4m${this.agentNameColor}💬 ${this.agentName.toUpperCase()} SAYS 💬 \x1b[0m`)
+        console.log(`\x1b[3m${this.agentNameColor}${response}\x1b[0m\n`);
         if (message) {
             this.shortMemory.push(`${recipient} said: ${message}`)
         }
