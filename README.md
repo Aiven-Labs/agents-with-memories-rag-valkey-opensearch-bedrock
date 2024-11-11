@@ -4,7 +4,10 @@
 - Persistent short memory storage uses Apache Kafka topics
 - Long term memory relies on RAG, langchain, OpenSearch and Apache Kafka
 
-## Step 1: Deploy Aiven services with Terraform
+## Step 1: Create a workspace with GitPod
+https://gitpod.io/new/#https://github.com/Aiven-Labs/agents-with-memories-rag-valkey-opensearch-bedrock
+
+## Step 2: Deploy Aiven services with Terraform
 
 ### Register with Aiven
 If you don't have Aiven account yet, [register here](https://go.aiven.io/aws-agents-workshop) to get extra credits.
@@ -38,7 +41,7 @@ Terraform will initiate creation of four resources:
 
 Once deployment is done, Terraform will also create `.env` file with necessary credentials to access the services and `certificates` folder with Apache Kafka certificates.
 
-## Step 2: Enable Amazon Bedrock model Claude
+## Step 3: Enable Amazon Bedrock model Claude
 In this project we use LLM Claude available through Amazon Bedrock.
 To invoke the model you need first to enable access:
 
@@ -54,12 +57,12 @@ This project assumes that AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID are access
 
 Context: the credentials are used by `@aws-sdk/client-bedrock-runtime` when creating a client, see Bedrock client creation in `./src/common.js` for details.
 
-## Step 3: Install libraries
+## Step 4: Install libraries
 This project uses npm and NodeJS, if you don't have them installed, follow instruction at [the NodeJS documentation page](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
 Run
 ``npm install``
 
-## Step 4: Run locally
+## Step 5: Run locally
 Run
 ``node run``
 
