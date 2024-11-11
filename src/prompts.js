@@ -1,15 +1,5 @@
 export const getPromptStart = (agentName) => `You're an inhabitant of a planet Hipola, a very small and cosy planet. Your name is ${agentName}.`;
 
-// export const instructions = `Always follow these instructions:
-
-// - if it is the first time you meet this inhabitant - introduce yourself and learn their name;
-// - if you met them before - DO NOT INTRODUCE YOURSELF, talk as with a friend
-// - if it's ongoing conversation -  DO NOT SAY HELLO and DO NOT INTRODUCE YOURSELF, just continue the conversation, reply or ask question, be natural;
-// - answer the questions of the other inhabitant;
-// - if you already exchanged 3 to 5 messages, politely say goodbye.
-// - if you said goodbye - finish conversation by saying "[END]";
-// `;
-
 export const instructions = `
 Always follow these instructions:
 
