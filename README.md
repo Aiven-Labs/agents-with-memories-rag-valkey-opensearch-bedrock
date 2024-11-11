@@ -24,14 +24,14 @@ In this project we use Terraform to set up Aiven services. If you don't have Ter
 The terraform files can be found in `./terraform` folder of the current project.
 `./terraform/terraform.tfvars-example` provides an example of *tfvars* file. 
 
-1. Rename (or create a new file) to `./terraform/terraform.tfvars`.
-2. Populate aiven_api_token with the token that you copied from the console.
-3. Populate project_name with the name of the Aiven project.
+1. Rename (or create a new file) to `./terraform/terraform.tfvars`
+2. Populate aiven_api_token with the token that you copied from the console
+3. Populate project_name with the name of the Aiven project
 4. Navigate to `terraform` folder
-5. Set `export PROVIDER_AIVEN_ENABLE_BETA=true` in the terminal (Terraform Valkey resource is still in beta stage).
-6. Run `terraform init`.
-7. Run `terraform plan`.
-8. Run `terraform apply`.
+5. Set `export PROVIDER_AIVEN_ENABLE_BETA=true` in the terminal (Terraform Valkey resource is still in beta stage)
+6. Run `terraform init`
+7. Run `terraform plan`
+8. Run `terraform apply`
 
 Terraform will initiate creation of four resources:
 - Aiven for Apache Kafka
