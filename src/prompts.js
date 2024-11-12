@@ -14,15 +14,16 @@ export const getMemoryPrompt = (agentName, anotherAgent) => `The context are mem
 
 export const getContinuationMemoryPrompt = (agentName, anotherAgent, message) => `The context are memories of ${agentName}. Are there any memories or thoughts about ${anotherAgent} relevant to the message "${message}"? If yes return "Something that I remember from past conversations with ${anotherAgent} is that .... [continue with a concise list of notes]". Otherwise, if there is no relevant context return "nothing relevant that I remember" and be very very very short and don't provide any other judgement or additional information!`;
 
-export const getStartConversationPrompt = (agentName, memoriesOfOtherAgent) => `${getPromptStart(agentName)} ${memoriesOfOtherAgent}.\n\n${instructions}`;
+export const getStartConversationPrompt = (agentName, memoriesOfOtherAgent) => `${getPromptStart(agentName)} ${memoriesOfOtherAgent || 'You have not met this inhabitant yet.'}.\n\n${instructions}`;
 
 export const getContinueConversationPrompt = (agentName, memoryString, longTermMemory, message) => `
 ${getPromptStart(agentName)}
 You're talking to another inhabitant.
 ${memoryString ? `This is the conversation so far:\n${memoryString}\n` : ''}
 
-Some time ago you already talked to this inhabitant. And here is something that is relevant to what they saying to you now:\n${longTermMemory}\n\n
- Reply to the following ohrase from the inhabitant you're talking to: \n"${message}"\n\n Ask a relevant question to continue the conversation. If you already had several messages exchanged, politely say goodbye and end conversation. Be concise. Remember, you're ${agentName}.
+${longTermMemory && 'Some time ago you already talked to this inhabitant. And here is something that is relevant to what they saying to you now:\n'}
+${!memoryString && !longTermMemory && 'This is the first time you meet them.'}
+ Reply to the following phrase from the inhabitant you're talking to: \n"${message}"\n\n Ask a relevant question to continue the conversation. If you already had several messages exchanged, politely say goodbye and end conversation. Be concise. Remember, you're ${agentName}.
 
 ${instructions}`;
 
